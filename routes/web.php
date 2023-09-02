@@ -23,9 +23,7 @@ Route::post('/test', [TransactionController::class, 'test'])->name("test");
 
 Route::post('/transaction/create', [TransactionController::class, 'create'])->name("transaction.create");
 
-Route::get('/transactions', function () {
-    return view('pages/transactions');
-})->middleware(['auth', 'verified'])->name('transactions');
+Route::get('/transactions', [TransactionController::class, 'getView'])->middleware(['auth', 'verified'])->name('transactions');
 
 Route::get('/dashboard', function () {
     return view('pages/dashboard');

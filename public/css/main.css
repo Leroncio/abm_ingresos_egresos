@@ -1,0 +1,26 @@
+.label{
+    width: auto;
+    border-radius: 2px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    padding: 3px;;
+}
+
+.bg-green{
+    background-color: #00a65a;
+}
+
+.bg-red{
+    background-color: #dd4b39;
+}
+
+.text-green{
+    color: #00a65a !important;
+    font-weight: bold;
+}
+
+.text-red{
+    color: #dd4b39 !important;
+    font-weight: bold;
+}
