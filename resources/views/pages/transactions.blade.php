@@ -10,15 +10,9 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @if (\Session::has('message'))
-                @if((bool) Session::get('status'))
-                    <div class="notification-msg bg-green uppercase overflow-hidden shadow-sm sm:rounded-lg text-center text-white mb-6 p-6">
-                        {{ Session::get('message') }}
-                    </div>
-                @else
-                    <div class="notification-msg bg-red uppercase overflow-hidden shadow-sm sm:rounded-lg text-center text-white mb-6 p-6">
-                        {{ Session::get('message') }}
-                    </div>
-                @endif
+                <div class="notification-msg  @if((bool) Session::get('status')) bg-green @else bg-red @endif uppercase overflow-hidden shadow-sm sm:rounded-lg text-center text-white mb-4 p-4">
+                    {{ Session::get('message') }}
+                </div>
             @endif
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg" style="min-height: 500px;">
                 <div class="p-6 text-gray-900">

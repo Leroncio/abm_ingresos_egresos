@@ -13,7 +13,8 @@
 
         
         <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
-        
+
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -35,5 +36,6 @@
                 {{ $slot }}
             </main>
         </div>
+        @stack('scripts')
     </body>
 </html>

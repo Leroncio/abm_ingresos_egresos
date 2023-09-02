@@ -19,7 +19,7 @@
                         {{ __('Transacciones') }}
                     </x-nav-link>
                     <x-nav-link :href="route('/')" :active="request()->routeIs('/')">
-                        {{ __('Dashboard') }}
+                        {{ __('Calculos por mes') }}
                     </x-nav-link>
                 </div>
             </div>

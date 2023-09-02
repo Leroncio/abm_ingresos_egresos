@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
@@ -21,17 +22,12 @@ Route::get('/', function () {
 
 Route::post('/test', [TransactionController::class, 'test'])->name("test");
 
+Route::get('/dashboard', [MainController::class, 'getView'])->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/transactions', [TransactionController::class, 'getView'])->name('transactions');
 Route::post('/transaction/create', [TransactionController::class, 'create'])->name("transaction.create");
 Route::delete('/transaction/delete', [TransactionController::class, 'delete'])->name("transaction.delete");
 Route::patch('/transaction/update', [TransactionController::class, 'update'])->name("transaction.update");
-
-Route::get('/transactions', [TransactionController::class, 'getView'])->middleware(['auth', 'verified'])->name('transactions');
-
-Route::get('/dashboard', function () {
-    return view('pages/dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
