@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,11 +17,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name("/");
+
+Route::post('/test', [TransactionController::class, 'test'])->name("test");
+
+Route::post('/transaction/create', [TransactionController::class, 'create'])->name("transaction.create");
+
+Route::get('/transactions', function () {
+    return view('pages/transactions');
+})->middleware(['auth', 'verified'])->name('transactions');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('pages/dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
