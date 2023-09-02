@@ -39,7 +39,16 @@ $maxWidth = [
             document.body.classList.remove('overflow-y-hidden');
         }
     })"
-    x-on:open-modal.window="$event.detail == '{{ $name }}' ? show = true : null"
+    x-on:open-modal.window="$event.detail == '{{ $name }}' ? show = true : null;
+    if('{{ $name }}'== 'confirm-data-deletion'){
+        document.getElementById('selected').value = $event.target.attributes.selected.value;
+    }else if('{{ $name }}'== 'update-transaction'){
+        console.log($event.target.attributes);
+        document.getElementById('to-update').value = $event.target.attributes.selected.value;
+        document.getElementById('up-detail').value = $event.target.attributes.detail.value;
+        document.getElementById('up-amount').value = $event.target.attributes.amount.value;
+        //document.getElementById('up-type').value = $event.target.attributes.selected.value;
+    }"
     x-on:close.stop="show = false"
     x-on:keydown.escape.window="show = false"
     x-on:keydown.tab.prevent="$event.shiftKey || nextFocusable().focus()"

@@ -53,7 +53,69 @@ class TransactionController extends Controller
             'amount' => $request->amount
         ]);
 
-        return redirect(RouteServiceProvider::TRANSACTIONS);
+        return redirect(RouteServiceProvider::TRANSACTIONS)
+                    ->with(['status'=>true,'message'=>'Registro ingresado']);
+    }
+
+    public function delete(Request $request): RedirectResponse
+    {
+
+        $messages = [
+            "required"=>"No se pudo seleccionar el registro a eliminar",
+            "numeric"=>"El envio de registro se encuentra mal formateado",
+            "min"=>"No es posible eliminar este registro"
+        ];
+
+        $request->validateWithBag('deleteTransaction',[
+            'selected' => ['required', 'numeric', 'min:1'],
+        ], $messages);
+
+        $selected = $request->selected;
+
+        $find = Transaction::find($selected);
+        if($find){
+            if(Transaction::destroy($selected)){
+                return redirect(RouteServiceProvider::TRANSACTIONS)
+                    ->with(['status'=>true,'message'=>'Registro eliminado']);
+            }else{
+                return redirect(RouteServiceProvider::TRANSACTIONS)
+                    ->with(['status'=>false,'message'=>'No se pudo eliminar el estado']);
+            }
+        }else{
+            return redirect(RouteServiceProvider::TRANSACTIONS)
+            ->with(['status'=>false,'message'=>'El registro no existe']);
+        }
+    
+    }
+
+    public function update(Request $request) : RedirectResponse
+    {
+        $messages = [
+            "required"=>"Este campo es obligatorio",
+            "numeric"=>"Este campo debe ser un número",
+            "min"=>"Ingresa un número mayor que 0"
+        ];
+
+        $request->validateWithBag('createTransaction',[
+            'up-detail' => ['required', 'string', 'max:191'],
+            'up-amount' => ['required', 'numeric', 'min:0'],
+            //'type' => ['required', 'numeric', 'digits_between:0,3']
+        ], $messages);
+
+        $transaction_id = $request["to-update"];
+
+        $transaction = Transaction::where('id',$transaction_id)->get()->first();
+
+        $transaction->detail = $request["up-detail"];
+        $transaction->amount = $request["up-amount"];
+
+        if($transaction->update()){
+            return redirect(RouteServiceProvider::TRANSACTIONS)
+                ->with(['status'=>true,'message'=>'Registro actualizado']);
+        }else{
+            return redirect(RouteServiceProvider::TRANSACTIONS)
+                ->with(['status'=>false,'message'=>'No se pudo actualizar el estado']);
+        }        
     }
     
     public function test(Request $request) : RedirectResponse {

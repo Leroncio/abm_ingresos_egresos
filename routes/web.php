@@ -22,6 +22,8 @@ Route::get('/', function () {
 Route::post('/test', [TransactionController::class, 'test'])->name("test");
 
 Route::post('/transaction/create', [TransactionController::class, 'create'])->name("transaction.create");
+Route::delete('/transaction/delete', [TransactionController::class, 'delete'])->name("transaction.delete");
+Route::patch('/transaction/update', [TransactionController::class, 'update'])->name("transaction.update");
 
 Route::get('/transactions', [TransactionController::class, 'getView'])->middleware(['auth', 'verified'])->name('transactions');
 

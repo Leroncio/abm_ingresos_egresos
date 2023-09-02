@@ -9,6 +9,17 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            @if (\Session::has('message'))
+                @if((bool) Session::get('status'))
+                    <div class="notification-msg bg-green uppercase overflow-hidden shadow-sm sm:rounded-lg text-center text-white mb-6 p-6">
+                        {{ Session::get('message') }}
+                    </div>
+                @else
+                    <div class="notification-msg bg-red uppercase overflow-hidden shadow-sm sm:rounded-lg text-center text-white mb-6 p-6">
+                        {{ Session::get('message') }}
+                    </div>
+                @endif
+            @endif
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg" style="min-height: 500px;">
                 <div class="p-6 text-gray-900">
 
@@ -65,8 +76,6 @@
         </div>
     </div>
 
-    {{ $errors->createTransaction }}
-
     <x-modal name="create-transaction" :show="$errors->createTransaction->isNotEmpty()" focusable>
         <form method="post" action="{{ route('transaction.create') }}" class="p-6">
             @csrf
@@ -121,5 +130,105 @@
             </div>
         </form>
     </x-modal>
+
+    <x-modal name="update-transaction" :show="$errors->updateTransaction->isNotEmpty()" focusable>
+        <form method="post" action="{{ route('transaction.update') }}" class="p-6">
+            @csrf
+            @method('patch')
+
+            <h2 class="text-lg font-medium text-gray-900">
+                {{ __('Actualizar transacción') }}
+            </h2>
+
+            <input type="hidden" id="to-update" name="to-update" value="0" />
+
+            <div class="mt-6">
+                <x-input-label for="detail" :value="__('Detalle')"/>
+                <x-text-input 
+                    id="up-detail" 
+                    name="up-detail" 
+                    type="text" 
+                    class="mt-1 block w-full" 
+                    :value="old('detail')"
+                 />
+                <x-input-error :messages="$errors->updateTransaction->get('detail')" class="mt-2" />
+            </div>
+
+            <div class="mt-6">
+                <x-input-label for="amount" :value="__('Cantidad')" />
+                <x-text-input 
+                    id="up-amount" 
+                    name="up-amount" 
+                    type="number" 
+                    class="mt-1 block w-full" 
+                    :value="old('amount')"
+                 />
+                <x-input-error :messages="$errors->updateTransaction->get('amount')" class="mt-2" />
+            </div>
+
+            <div class="mt-6">
+                <x-input-label for="up-type" :value="__('Tipo de transacción')" />
+                <x-input-select 
+                    id="up-type" 
+                    name="up-type" 
+                    class="mt-1 block w-full"
+                    :options="$options"
+                 />
+                <x-input-error :messages="$errors->updateTransaction->get('type')" class="mt-2" />
+            </div>
+
+            <div class="mt-8 flex justify-end">
+                <x-secondary-button x-on:click="$dispatch('close')">
+                    {{ __('Cancelar') }}
+                </x-secondary-button>
+
+                <x-primary-button class="ml-3">
+                    {{ __('Actualizar') }}
+                </x-primary-button>
+            </div>
+        </form>
+    </x-modal>
+
+    <x-modal name="confirm-data-deletion" focusable>
+        <form method="post" action="{{ route('transaction.delete') }}" class="p-6">
+            @csrf
+            @method('delete')
+
+            <input type="hidden" id="selected" name="selected" value="0" />
+
+            <h2 class="text-lg font-medium text-gray-900">
+                {{ __('Seguro que desea eliminar este registro?') }}
+            </h2>
+
+            <p class="mt-1 text-sm text-gray-600">
+                {{ __('una vez eliminado será imposible recuperar esta información') }}
+            </p>
+
+            <div class="mt-6 flex justify-end">
+                <x-secondary-button x-on:click="$dispatch('close')">
+                    {{ __('Cancelar') }}
+                </x-secondary-button>
+
+                <x-danger-button class="ml-3">
+                    {{ __('Eliminar') }}
+                </x-danger-button>
+            </div>
+        </form>
+    </x-modal>
+
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+
+            setTimeout(() => {
+                let mssg = document.querySelector('.notification-msg');
+                mssg.classList.toggle('hidden');
+            }, 2000);
+
+        });
+
+    </script>
+
 
 </x-app-layout>
