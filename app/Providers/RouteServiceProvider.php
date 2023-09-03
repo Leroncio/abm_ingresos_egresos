@@ -21,6 +21,8 @@ class RouteServiceProvider extends ServiceProvider
 
     public const TRANSACTIONS = 'transactions';
 
+    public const CALCUTLATION = 'calculation';
+
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.

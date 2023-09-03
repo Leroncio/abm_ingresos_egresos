@@ -16,6 +16,8 @@ class Transaction extends Model
         'type',
         'detail',
         'amount',
+        'created_at',
+        'updated_at'
     ];
 
 
