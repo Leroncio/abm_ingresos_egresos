@@ -3,7 +3,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Transactions') }}
+            {{ __('Transacciones') }}
         </h2>
     </x-slot>
 
@@ -50,10 +50,10 @@
                                     @foreach ($list as $transaction)
                                         <x-table-row
                                             :id="$transaction->id"
-                                            :type="$transaction->type"
+                                            :selected="$transaction->type"
                                             :detail="$transaction->detail"
                                             :amount="$transaction->amount"
-                                            :updated="$transaction->updated_at->format('Y-m-d h:i:s')"
+                                            :created="$transaction->created_at->format('Y-m-d h:i:s')"
                                         >
                                         </x-table-row>
                                     @endforeach
@@ -162,12 +162,11 @@
 
             <div class="mt-6">
                 <x-input-label for="up-type" :value="__('Tipo de transacción')" />
-                <x-input-select 
-                    id="up-type" 
-                    name="up-type" 
-                    class="mt-1 block w-full"
-                    :options="$options"
-                 />
+                <select id="up-type" name="up-type" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                    @foreach ($options as $value => $label)
+                        <option value="{{ $value }}">{{ $label }}</option>
+                    @endforeach
+                </select>
                 <x-input-error :messages="$errors->updateTransaction->get('type')" class="mt-2" />
             </div>
 
@@ -214,12 +213,12 @@
     <script>
 
         document.addEventListener("DOMContentLoaded", function(event) {
-
             setTimeout(() => {
                 let mssg = document.querySelector('.notification-msg');
-                mssg.classList.toggle('hidden');
+                if(mssg !== null){
+                    mssg.classList.toggle('hidden');
+                }
             }, 2000);
-
         });
 
     </script>

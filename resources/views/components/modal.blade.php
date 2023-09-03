@@ -43,11 +43,10 @@ $maxWidth = [
     if('{{ $name }}'== 'confirm-data-deletion'){
         document.getElementById('selected').value = $event.target.attributes.selected.value;
     }else if('{{ $name }}'== 'update-transaction'){
-        console.log($event.target.attributes);
         document.getElementById('to-update').value = $event.target.attributes.selected.value;
-        document.getElementById('up-detail').value = $event.target.attributes.detail.value;
-        document.getElementById('up-amount').value = $event.target.attributes.amount.value;
-        //document.getElementById('up-type').value = $event.target.attributes.selected.value;
+        document.getElementById('up-detail').value = $event.target.querySelector(`input[name='ref-detail']`).value;
+        document.getElementById('up-amount').value = $event.target.querySelector(`input[name='ref-amount']`).value;
+        document.getElementById('up-type').value = $event.target.querySelector(`input[name='ref-selected']`).value;
     }"
     x-on:close.stop="show = false"
     x-on:keydown.escape.window="show = false"

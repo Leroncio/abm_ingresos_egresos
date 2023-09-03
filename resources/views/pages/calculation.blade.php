@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Calculation') }}
+            {{ __('Calculos') }}
         </h2>
     </x-slot>
     <div class="py-12">
@@ -26,12 +26,12 @@
                 <div class="flex">
                     <div class="sm:w-1/1 md:w-1/2 p-6 text-gray-900">
                         <div class="detail-container p-6">
-                            <div><b>{{ __("Flujo en ").$current["monthName"] }}:</b> {{ __("0") }}</div>
-                            <div><b>{{ __("Flujo en ").$comparative["monthName"] }}:</b> {{ __("0") }}</div>
-                            <div class="mt-4"><b>Total ingresos:</b> {{ __("0") }}</div>
-                            <div class=""><b>Total gastos:</b> {{ __("0") }}</div>
-                            <div class="mt-4"><b>Diferencia:</b> {{ __("Eduardo Araya") }}</div>
-                            <div><b>Porcentual:</b> {{ __("Eduardo Araya") }}</div>
+                            <div><b>{{ __("Flujo en ").$current["monthName"] }}:</b> <span class="@if($current["profits"] < 0) text-red @else text-green @endif">${{ $current["profits"] }}</span></div>
+                            <div><b>{{ __("Flujo en ").$comparative["monthName"] }}:</b> <span class="@if($comparative["profits"] < 0) text-red @else text-green @endif">${{ $comparative["profits"] }}</span></div>
+                            <div class="mt-4"><b>{{ __("Datos en ").$current["monthName"] }}</b></span></div>
+                            <div class><b>Total ingresos:</b> <span class="text-green">$ {{ $earned }}</span></div>
+                            <div class=""><b>Total gastos:</b> <span class="text-red">${{ $bill }}</span></div>
+                            <div><b>Rendimiento:</b> {{ $difference }}</div>
                         </div>
                     </div>
                     <div class="flex sm:w-1/1 md:w-1/2 p-6 text-gray-900 justify-center">

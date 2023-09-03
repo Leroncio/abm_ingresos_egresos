@@ -20,7 +20,7 @@
                         <div class="mt-4 font-semibold">{{ __("Recursos adiconales integrados") }}</div>
                         <div>{{ __("Breeze") }}</div>
                         <div>{{ __("Tailwind CSS") }}</div>
-                        <div>{{ __("Tailwind CSS") }}</div>
+                        <div>{{ __("Chart.js") }}</div>
                     </div>
                 </div>
                 <div class="sm:w-1/1 md:w-1/2 p-6 text-gray-900 justify-center">

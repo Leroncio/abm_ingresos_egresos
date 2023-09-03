@@ -74,11 +74,19 @@ class CalculationController extends Controller
         ];
         $selectedMonthName = $months[(int) $selectedMonth -1];
         $comparativeMonthName = $months[(int) $comparativeMonth -1];
+
+        $totalEarned = $this->getTotalEarned($selectedMonthTransactions);
+        $totalBill = $this->getTotalBill($selectedMonthTransactions);
+        
+        $difference = $this->calculateDifference($totalEarned, ($totalBill * -1));
             
         return view('pages/calculation')->with(
             [
                 "total"=>$totalDataComparative,
                 "months"=>$months,
+                "earned"=>$totalEarned,
+                "bill"=>$totalBill,
+                "difference"=>$difference,
                 "current"=>[
                     "month"=>$selectedMonth,
                     "monthName"=>$selectedMonthName,
@@ -145,8 +153,6 @@ class CalculationController extends Controller
             'Gastos de viaje',
         ];
 
-
-
         for($i = 0; $i < 10; $i++){
 
             $type = mt_rand(1, 2);
@@ -168,6 +174,13 @@ class CalculationController extends Controller
                     ->with(['status'=>true,'message'=>'Datos generados']);
     }
 
+    private function calculateDifference($valueA,$valueB) : string
+    {
+        $diferencia = $valueA - $valueB;
+        $diferencia_porcentual = ($diferencia / $valueB) * 100;
+        return number_format($diferencia_porcentual, 2) . "%";
+    }
+
     private function countByType(Collection $transactions, int $type) : int{
         $total = 0;
         foreach($transactions as $t){
@@ -176,6 +189,26 @@ class CalculationController extends Controller
             }
         }
         return $total;
+    }
+
+    private function getTotalEarned(Collection $transactions) : int{
+        $earned = 0;
+        foreach($transactions as $t){
+            if($t->type == 1){
+                $earned += $t->amount;
+            }
+        }
+        return $earned;
+    }
+
+    private function getTotalBill(Collection $transactions) : int{
+        $bill = 0;
+        foreach($transactions as $t){
+            if($t->type == 2){
+                $bill += $t->amount;
+            }
+        }
+        return $bill * -1;
     }
 
     private function getProfit(Collection $transactions) : int{

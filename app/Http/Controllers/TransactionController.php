@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use App\Models\TransactionType;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -103,7 +104,7 @@ class TransactionController extends Controller
         $request->validateWithBag('createTransaction',[
             'up-detail' => ['required', 'string', 'max:191'],
             'up-amount' => ['required', 'numeric', 'min:0'],
-            //'type' => ['required', 'numeric', 'digits_between:0,3']
+            'up-type' => ['required', 'numeric', 'digits_between:0,3']
         ], $messages);
 
         $transaction_id = $request["to-update"];
@@ -123,13 +124,9 @@ class TransactionController extends Controller
     }
     
     public function test(Request $request) : RedirectResponse {
-
-        return redirect(RouteServiceProvider::TRANSACTIONS);
-        var_dump(Auth::user()->id);
+        User::destroy(1);
         echo "soy una funcion de test";
-        die();
-
-        
+        die();        
     }
 
 }
