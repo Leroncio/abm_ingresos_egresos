@@ -176,6 +176,9 @@ class CalculationController extends Controller
 
     private function calculateDifference($valueA,$valueB) : string
     {
+        if($valueA == 0 || $valueB == 0){
+            return "0%";
+        }
         $diferencia = $valueA - $valueB;
         $diferencia_porcentual = ($diferencia / $valueB) * 100;
         return number_format($diferencia_porcentual, 2) . "%";

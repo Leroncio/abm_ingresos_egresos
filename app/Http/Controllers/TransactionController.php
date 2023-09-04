@@ -113,6 +113,7 @@ class TransactionController extends Controller
 
         $transaction->detail = $request["up-detail"];
         $transaction->amount = $request["up-amount"];
+        $transaction->type = $request["up-type"];
 
         if($transaction->update()){
             return redirect(RouteServiceProvider::TRANSACTIONS)

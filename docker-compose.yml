@@ -1,0 +1,16 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+  mysql:
+    image: mysql:8.0.31
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_ROOT_USER: root
+      MYSQL_DATABASE: pruebatecnica
+    ports:
+      - "3306:3306"

@@ -4,6 +4,7 @@ use App\Http\Controllers\CalculationController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +18,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () { return view('welcome'); })->name("/");
+Route::get('/', function () { 
+    Artisan::call('migrate');
+    Artisan::call('db:seed');
+    return view('welcome'); 
+})->name("/");
 
 Route::get('/test', [TransactionController::class, 'test'])->name("test");
 

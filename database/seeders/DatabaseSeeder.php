@@ -15,11 +15,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        TransactionType::create([
+        TransactionType::updateOrCreate([
+            'id'=>1,
             'type'=>'Ingresos'
         ]);
 
-        TransactionType::create([
+        TransactionType::updateOrCreate([
+            'id'=>2,
             'type'=>'Gastos'
         ]);
 
